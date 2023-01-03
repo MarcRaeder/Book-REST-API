@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using BookApi.Models;
 using BookApi.Service;
 
@@ -12,11 +9,11 @@ namespace BookApi.Controllers
 {
     [Route("")]
     [ApiController]
-    public class BookController1 : ControllerBase
+    public class BookController : ControllerBase
     {
         private BookService bookService;
 
-        public BookController1(BookService bookService)
+        public BookController(BookService bookService)
         {
             this.bookService = bookService;
         }
@@ -40,9 +37,9 @@ namespace BookApi.Controllers
         }
 
         [HttpPut("updatePageCountOfBook")]
-        public async Task<Book> UpdatePageCountOfBook(string title, int newPageCount)
+        public async Task<Book> UpdatePageCountOfBook(Guid id, int newPageCount)
         {
-            return await bookService.UpdatePageCountOfBook(title, newPageCount);
+            return await bookService.UpdatePageCountOfBook(id, newPageCount);
         }
 
     }

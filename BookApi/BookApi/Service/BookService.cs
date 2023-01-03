@@ -1,5 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using BookApi.Models;
-using NuGet.Protocol.Core.Types;
 
 namespace BookApi.Service;
 
@@ -26,8 +28,8 @@ public class BookService
         return await bookRepository.DeleteAllBooks();
     }
     
-    public async Task<Book> UpdatePageCountOfBook(string title, int newPageCount)
+    public async Task<Book> UpdatePageCountOfBook(Guid id, int newPageCount)
     {
-        return await bookRepository.UpdatePageCountOfBook(title, newPageCount);
+        return await bookRepository.UpdatePageCountOfBook(id, newPageCount);
     }
 }

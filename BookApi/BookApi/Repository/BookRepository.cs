@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using BookApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,19 +28,11 @@ public class BookRepository
         {
             PageCount = pageCount
         };
+        
+        await this.bookContext.Books.AddAsync(book);
+        await bookContext.SaveChangesAsync();
 
-        try
-        {
-            await this.bookContext.Books.AddAsync(book);
-            await bookContext.SaveChangesAsync();
-
-            return book;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return book;
     }
     
     public async Task<IList<Book>> DeleteAllBooks()
@@ -47,10 +43,10 @@ public class BookRepository
         return await bookContext.Books.ToListAsync();
     }
     
-    public async Task<Book> UpdatePageCountOfBook(string title, int newPageCount)
+    public async Task<Book> UpdatePageCountOfBook(Guid id, int newPageCount)
     {
         var bookToUpdate = await bookContext.Books
-            .Where(book => book.Title == title)
+            .Where(book => book.Id == id)
             .FirstOrDefaultAsync();
 
         if (bookToUpdate == null)
